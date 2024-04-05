@@ -5,7 +5,7 @@ import PackageDescription
 
 let name: String = "swift-secrets-vault-plugin"
 
-// MARK: Package Description SupportedPlatform
+// MARK: - Package Description SupportedPlatform
 
 let platforms: [PackageDescription.SupportedPlatform] = [
     .macOS(.v10_15),
@@ -15,23 +15,41 @@ let platforms: [PackageDescription.SupportedPlatform] = [
     .macCatalyst(.v13)
 ]
 
-// MARK: Package Description Product
+// MARK: - Package Description Product
 
 let products: [PackageDescription.Product] = [
+    .executable(name: "generateSecret", targets: ["GenerateSecretCommand"]),
 ]
 
-// MARK: Package Dependency
+// MARK: - Package Dependency
 
 let dependencies: [Package.Dependency] = [
+    .package(url: "https://github.com/apple/swift-argument-parser", "1.3.0"..<"1.4.0"),
 ]
 
 // MARK: Package Description Target
 
 let targets: [PackageDescription.Target] = [
+    // MARK: - Targets
+    .executableTarget(
+        name: "GenerateSecretCommand",
+        dependencies: [
+            "CodeGenerator",
+            .product(name: "ArgumentParser", package: "swift-argument-parser"),
+        ]
+    ),
     .target(name: "CodeGenerator", dependencies: ["SecretsVaultModel"]),
     .target(name: "SecretsVaultModel", dependencies: ["SecretsVaultUtility"]),
     .target(name: "SecretsVaultUtility"),
-    // MARK: Tests
+
+    // MARK: - Example Target
+    .executableTarget(
+        name: "ExampleTarget",
+        exclude: ["ExampleSecrets.json"],
+        swiftSettings: [.define("CUSTOM_RELEASE_FLAG", .when(configuration: .release))]
+    ),
+
+    // MARK: - Tests
     .testTarget(
         name: "SecretsVaultUtilityTests",
         dependencies: ["SecretsVaultUtility"]
@@ -46,7 +64,7 @@ let targets: [PackageDescription.Target] = [
     ),
 ]
 
-// - MARK: PackageDescription Package
+// MARK: - PackageDescription Package
 
 let package: Package = PackageDescription.Package(
     name: name,
