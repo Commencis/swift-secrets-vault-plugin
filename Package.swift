@@ -28,11 +28,16 @@ let dependencies: [Package.Dependency] = [
 // MARK: Package Description Target
 
 let targets: [PackageDescription.Target] = [
+    .target(name: "SecretsVaultModel", dependencies: ["SecretsVaultUtility"]),
     .target(name: "SecretsVaultUtility"),
     // MARK: Tests
     .testTarget(
         name: "SecretsVaultUtilityTests",
         dependencies: ["SecretsVaultUtility"]
+    ),
+    .testTarget(
+        name: "SecretsVaultModelTests",
+        dependencies: ["SecretsVaultModel"]
     ),
 ]
 
