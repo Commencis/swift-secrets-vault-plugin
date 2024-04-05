@@ -13,9 +13,9 @@ private enum Constant {
         SecretFile(
             declName: "ValidsecretDecls",
             secretDecls: [
-                SecretDeclaration(secretName: "secretDecl1", secrets: validSecrets, strict: false),
-                SecretDeclaration(secretName: "secretDecl2", secrets: validSecrets, strict: false),
-                SecretDeclaration(secretName: "secretDecl3", secrets: validSecrets, strict: false)
+                SecretDeclaration(secretName: "secretDecl1", secrets: validSecrets, xorValue: nil, strict: false),
+                SecretDeclaration(secretName: "secretDecl2", secrets: validSecrets, xorValue: nil, strict: false),
+                SecretDeclaration(secretName: "secretDecl3", secrets: validSecrets, xorValue: nil, strict: false)
             ]
         )
     }
@@ -23,16 +23,16 @@ private enum Constant {
     static var invalidSecretFileDeclName: [SecretFile] {
         [SecretFile(
             declName: "validsecretDecls",
-            secretDecls: [SecretDeclaration(secretName: "secretDecl1", secrets: validSecrets, strict: false)]),
+            secretDecls: [SecretDeclaration(secretName: "secretDecl1", secrets: validSecrets, xorValue: nil, strict: false)]),
          SecretFile(
             declName: "1validsecretDecls",
-            secretDecls: [SecretDeclaration(secretName: "secretDecl1", secrets: validSecrets, strict: false)]),
+            secretDecls: [SecretDeclaration(secretName: "secretDecl1", secrets: validSecrets, xorValue: nil, strict: false)]),
          SecretFile(
             declName: "_validsecretDecls",
-            secretDecls: [SecretDeclaration(secretName: "secretDecl1", secrets: validSecrets, strict: false)]),
+            secretDecls: [SecretDeclaration(secretName: "secretDecl1", secrets: validSecrets, xorValue: nil, strict: false)]),
          SecretFile(
             declName: "",
-            secretDecls: [SecretDeclaration(secretName: "secretDecl1", secrets: validSecrets, strict: false)])]
+            secretDecls: [SecretDeclaration(secretName: "secretDecl1", secrets: validSecrets, xorValue: nil, strict: false)])]
     }
 
     static var invalidSecretFileWithEmptysecretDecl: SecretFile {
@@ -43,8 +43,8 @@ private enum Constant {
         SecretFile(
             declName: "ValidsecretDecls",
             secretDecls: [
-                SecretDeclaration(secretName: "secretDecl", secrets: validSecrets, strict: false),
-                SecretDeclaration(secretName: "secretDecl", secrets: validSecrets, strict: false)
+                SecretDeclaration(secretName: "secretDecl", secrets: validSecrets, xorValue: nil, strict: false),
+                SecretDeclaration(secretName: "secretDecl", secrets: validSecrets, xorValue: nil, strict: false)
             ]
         )
     }

@@ -22,25 +22,25 @@ private enum Constant {
     }
 
     static var validsecretDecls: [SecretDeclaration] {
-        [SecretDeclaration(secretName: "ValidsecretDecl", secrets: validSecrets, strict: false),
-         SecretDeclaration(secretName: "ValidsecretDecl1", secrets: validSecrets, strict: false),
-         SecretDeclaration(secretName: "Valid_Secret_Group", secrets: validSecrets, strict: false)]
+        [SecretDeclaration(secretName: "ValidsecretDecl", secrets: validSecrets, xorValue: nil, strict: false),
+         SecretDeclaration(secretName: "ValidsecretDecl1", secrets: validSecrets, xorValue: nil, strict: false),
+         SecretDeclaration(secretName: "Valid_Secret_Group", secrets: validSecrets, xorValue: nil, strict: false)]
     }
 
     static var secretDeclsWithInvalidKey: [SecretDeclaration] {
-        [SecretDeclaration(secretName: "secretDeclWithInvalid Name", secrets: validSecrets, strict: false),
-         SecretDeclaration(secretName: "1secretDeclWithInvalidName", secrets: validSecrets, strict: false),
-         SecretDeclaration(secretName: "", secrets: validSecrets, strict: false),
-         SecretDeclaration(secretName: "secret-GroupWith-Invalid-Name", secrets: validSecrets, strict: false),
-         SecretDeclaration(secretName: "_secretDeclWithInvalidName", secrets: validSecrets, strict: false)]
+        [SecretDeclaration(secretName: "secretDeclWithInvalid Name", secrets: validSecrets, xorValue: nil, strict: false),
+         SecretDeclaration(secretName: "1secretDeclWithInvalidName", secrets: validSecrets, xorValue: nil, strict: false),
+         SecretDeclaration(secretName: "", secrets: validSecrets, xorValue: nil, strict: false),
+         SecretDeclaration(secretName: "secret-GroupWith-Invalid-Name", secrets: validSecrets, xorValue: nil, strict: false),
+         SecretDeclaration(secretName: "_secretDeclWithInvalidName", secrets: validSecrets, xorValue: nil, strict: false)]
     }
 
     static var secretDeclWihtTooManyNoFlags: SecretDeclaration {
-        SecretDeclaration(secretName: "secretDeclWtihTooManyNoFlags", secrets: tooManySecretsWithNoFlag, strict: false)
+        SecretDeclaration(secretName: "secretDeclWtihTooManyNoFlags", secrets: tooManySecretsWithNoFlag, xorValue: nil, strict: false)
     }
 
     static var secretDeclThatSharesFlag: SecretDeclaration {
-        SecretDeclaration(secretName: "secretDeclThatSharesFlag", secrets: tooManySecretsThatSharesFlag, strict: false)
+        SecretDeclaration(secretName: "secretDeclThatSharesFlag", secrets: tooManySecretsThatSharesFlag, xorValue: nil, strict: false)
     }
 }
 
