@@ -19,6 +19,8 @@ let platforms: [PackageDescription.SupportedPlatform] = [
 
 let products: [PackageDescription.Product] = [
     .executable(name: "generateSecret", targets: ["GenerateSecretCommand"]),
+    .executable(name: "GenerateSecretCommand", targets: ["GenerateSecretCommand"]),
+    .plugin(name: "RXByteArraySecretPlugin", targets: ["RXByteArraySecretPlugin"]),
 ]
 
 // MARK: - Package Dependency
@@ -31,6 +33,11 @@ let dependencies: [Package.Dependency] = [
 
 let targets: [PackageDescription.Target] = [
     // MARK: - Targets
+    .plugin(
+        name: "RXByteArraySecretPlugin",
+        capability: .buildTool(),
+        dependencies: ["GenerateSecretCommand"]
+    ),
     .executableTarget(
         name: "GenerateSecretCommand",
         dependencies: [
@@ -45,8 +52,10 @@ let targets: [PackageDescription.Target] = [
     // MARK: - Example Target
     .executableTarget(
         name: "ExampleTarget",
-        exclude: ["ExampleSecrets.json"],
-        swiftSettings: [.define("CUSTOM_RELEASE_FLAG", .when(configuration: .release))]
+        swiftSettings: [.define("CUSTOM_RELEASE_FLAG", .when(configuration: .release))],
+        plugins: [
+            .plugin(name: "RXByteArraySecretPlugin")
+        ]
     ),
 
     // MARK: - Tests
