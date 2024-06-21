@@ -20,6 +20,14 @@ jobs:
         with:
           swift-version: ${{ matrix.swift }}
       - name: Build
-        run: swift build
+        run: xcrun swift build
+      - run: rm -rf reports && mkdir reports
       - name: Run tests
-        run: swift test
+        run: xcrun swift test --parallel --xunit-output "reports/test-result.xml"
+      - name: Test Report
+        uses: dorny/test-reporter@v1.9.1
+        if: success() || failure()
+        with:
+          name: Test Results
+          path: reports/test-result.xml
+          reporter: swift-xunit
