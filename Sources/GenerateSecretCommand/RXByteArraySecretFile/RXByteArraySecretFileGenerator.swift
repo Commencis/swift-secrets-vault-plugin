@@ -22,7 +22,7 @@ extension RXByteArraySecretFileGenerator {
     /// - Returns: A string representation of the generated code.
     public func generateCode() throws -> String {
         try validateSecretFile(secretFile)
-        let secretDecls = try secretFile.secretDecls.compactMap { secretDeclaration in
+        let secretDeclarations = try secretFile.secretDeclarations.compactMap { secretDeclaration in
             let rxByteArraySecret = RXByteArraySecretGenerator(secrets: secretDeclaration.secrets,
                                                                strict: secretDeclaration.strict,
                                                                xorValue: secretDeclaration.xorValue)
@@ -37,8 +37,8 @@ internal static func \(secretDeclaration.secretName)() -> String {
 }
 """
         }
-        let chainedSecretDecls = secretDecls.joined(separator: String.newLine)
-        let shiftedBodyString = chainedSecretDecls.replacingOccurrences(
+        let chainedSecretDeclarations = secretDeclarations.joined(separator: String.newLine)
+        let shiftedBodyString = chainedSecretDeclarations.replacingOccurrences(
             of: String.newLine,
             with: String.newLine + .singleTab
         )
@@ -46,7 +46,7 @@ internal static func \(secretDeclaration.secretName)() -> String {
         let fileContent = """
 import Foundation
 
-internal enum \(secretFile.declName) {
+internal enum \(secretFile.declarationName) {
 
     \(shiftedBodyString)
 }
@@ -62,8 +62,8 @@ private extension RXByteArraySecretFileGenerator {
     func validateSecretFile(_ secretFile: SecretFile) throws {
         let secretFileValidator = SecretFileValidator(secretFile: secretFile)
         try secretFileValidator.validate()
-        for secretDecl in secretFile.secretDecls {
-            let validator = SecretDeclValidator(secretDecl: secretDecl)
+        for secretDeclaration in secretFile.secretDeclarations {
+            let validator = SecretDeclarationValidator(secretDeclaration: secretDeclaration)
             try validator.validate()
         }
     }

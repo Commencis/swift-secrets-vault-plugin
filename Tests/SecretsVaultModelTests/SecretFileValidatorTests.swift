@@ -11,40 +11,40 @@ private enum Constant {
 
     static var validSecretFile: SecretFile {
         SecretFile(
-            declName: "ValidsecretDecls",
-            secretDecls: [
-                SecretDeclaration(secretName: "secretDecl1", secrets: validSecrets, xorValue: nil, strict: false),
-                SecretDeclaration(secretName: "secretDecl2", secrets: validSecrets, xorValue: nil, strict: false),
-                SecretDeclaration(secretName: "secretDecl3", secrets: validSecrets, xorValue: nil, strict: false)
+            declarationName: "ValidsecretDeclarations",
+            secretDeclarations: [
+                SecretDeclaration(secretName: "secretDeclaration1", secrets: validSecrets, xorValue: nil, strict: false),
+                SecretDeclaration(secretName: "secretDeclaration2", secrets: validSecrets, xorValue: nil, strict: false),
+                SecretDeclaration(secretName: "secretDeclaration3", secrets: validSecrets, xorValue: nil, strict: false)
             ]
         )
     }
 
-    static var invalidSecretFileDeclName: [SecretFile] {
+    static var invalidSecretFileDeclarationName: [SecretFile] {
         [SecretFile(
-            declName: "validsecretDecls",
-            secretDecls: [SecretDeclaration(secretName: "secretDecl1", secrets: validSecrets, xorValue: nil, strict: false)]),
+            declarationName: "validsecretDeclarations",
+            secretDeclarations: [SecretDeclaration(secretName: "secretDeclaration1", secrets: validSecrets, xorValue: nil, strict: false)]),
          SecretFile(
-            declName: "1validsecretDecls",
-            secretDecls: [SecretDeclaration(secretName: "secretDecl1", secrets: validSecrets, xorValue: nil, strict: false)]),
+            declarationName: "1validsecretDeclarations",
+            secretDeclarations: [SecretDeclaration(secretName: "secretDeclaration1", secrets: validSecrets, xorValue: nil, strict: false)]),
          SecretFile(
-            declName: "_validsecretDecls",
-            secretDecls: [SecretDeclaration(secretName: "secretDecl1", secrets: validSecrets, xorValue: nil, strict: false)]),
+            declarationName: "_validsecretDeclarations",
+            secretDeclarations: [SecretDeclaration(secretName: "secretDeclaration1", secrets: validSecrets, xorValue: nil, strict: false)]),
          SecretFile(
-            declName: "",
-            secretDecls: [SecretDeclaration(secretName: "secretDecl1", secrets: validSecrets, xorValue: nil, strict: false)])]
+            declarationName: "",
+            secretDeclarations: [SecretDeclaration(secretName: "secretDeclaration1", secrets: validSecrets, xorValue: nil, strict: false)])]
     }
 
-    static var invalidSecretFileWithEmptysecretDecl: SecretFile {
-        SecretFile(declName: "ValidsecretDecls", secretDecls: [])
+    static var invalidSecretFileWithEmptysecretDeclaration: SecretFile {
+        SecretFile(declarationName: "ValidsecretDeclarations", secretDeclarations: [])
     }
 
-    static var invalidSecretFileWithSharedsecretDeclKey: SecretFile {
+    static var invalidSecretFileWithSharedsecretDeclarationKey: SecretFile {
         SecretFile(
-            declName: "ValidsecretDecls",
-            secretDecls: [
-                SecretDeclaration(secretName: "secretDecl", secrets: validSecrets, xorValue: nil, strict: false),
-                SecretDeclaration(secretName: "secretDecl", secrets: validSecrets, xorValue: nil, strict: false)
+            declarationName: "ValidsecretDeclarations",
+            secretDeclarations: [
+                SecretDeclaration(secretName: "secretDeclaration", secrets: validSecrets, xorValue: nil, strict: false),
+                SecretDeclaration(secretName: "secretDeclaration", secrets: validSecrets, xorValue: nil, strict: false)
             ]
         )
     }
@@ -57,8 +57,8 @@ final class SecretFileValidatorTests: XCTestCase {
         XCTAssertNoThrow(try sut.validate())
     }
 
-    func testValidationFailsForInvalidSecretDeclName() {
-        for secretFile in Constant.invalidSecretFileDeclName {
+    func testValidationFailsForInvalidSecretDeclarationName() {
+        for secretFile in Constant.invalidSecretFileDeclarationName {
             let sut = SecretFileValidator(secretFile: secretFile)
             XCTAssertThrowsError(try sut.validate()) { error in
                 guard let error = error as? SecretFileValidationError else {
@@ -67,7 +67,7 @@ final class SecretFileValidatorTests: XCTestCase {
                 }
 
                 switch error {
-                case .invalidSecretDeclName:
+                case .invalidSecretDeclarationName:
                     // Success case
                     break
                 default:
@@ -77,8 +77,8 @@ final class SecretFileValidatorTests: XCTestCase {
         }
     }
 
-    func testValidationFailsForSecretFileWithEmptysecretDecl() throws {
-        let sut = SecretFileValidator(secretFile: Constant.invalidSecretFileWithEmptysecretDecl)
+    func testValidationFailsForSecretFileWithEmptysecretDeclaration() throws {
+        let sut = SecretFileValidator(secretFile: Constant.invalidSecretFileWithEmptysecretDeclaration)
         XCTAssertThrowsError(try sut.validate()) { error in
             guard let error = error as? SecretFileValidationError else {
                 XCTFail("Unexpected Error")
@@ -86,7 +86,7 @@ final class SecretFileValidatorTests: XCTestCase {
             }
 
             switch error {
-            case .noSecretDecl:
+            case .noSecretDeclaration:
                 // Success case
                 break
             default:
@@ -96,7 +96,7 @@ final class SecretFileValidatorTests: XCTestCase {
     }
 
     func testValidationFailsForTooManySharedGroupKey() {
-        let sut = SecretFileValidator(secretFile: Constant.invalidSecretFileWithSharedsecretDeclKey)
+        let sut = SecretFileValidator(secretFile: Constant.invalidSecretFileWithSharedsecretDeclarationKey)
         XCTAssertThrowsError(try sut.validate()) { error in
             guard let error = error as? SecretFileValidationError else {
                 XCTFail("Unexpected Error")
@@ -104,7 +104,7 @@ final class SecretFileValidatorTests: XCTestCase {
             }
 
             switch error {
-            case .moreThanTwoSecretDeclShareKey:
+            case .moreThanTwoSecretDeclarationShareKey:
                 // Success case
                 break
             default:
