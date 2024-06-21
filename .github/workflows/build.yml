@@ -1,0 +1,25 @@
+name: Build & Test
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+jobs:
+  build:
+    name: Swift ${{ matrix.swift }} on ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macos-latest]
+        swift: ["5.9"]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout Swift
+        uses: swift-actions/setup-swift@v2.0.0
+      - name: Checkout Project
+        uses: actions/checkout@v4
+        with:
+          swift-version: ${{ matrix.swift }}
+      - name: Build
+        run: swift build
+      - name: Run tests
+        run: swift test
