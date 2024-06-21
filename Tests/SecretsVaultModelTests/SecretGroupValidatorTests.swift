@@ -21,49 +21,49 @@ private enum Constant {
          SecretItem(value: "This is another default Secret", flags: nil)]
     }
 
-    static var validsecretDecls: [SecretDeclaration] {
-        [SecretDeclaration(secretName: "ValidsecretDecl", secrets: validSecrets, xorValue: nil, strict: false),
-         SecretDeclaration(secretName: "ValidsecretDecl1", secrets: validSecrets, xorValue: nil, strict: false),
+    static var validsecretDeclarations: [SecretDeclaration] {
+        [SecretDeclaration(secretName: "ValidsecretDeclaration", secrets: validSecrets, xorValue: nil, strict: false),
+         SecretDeclaration(secretName: "ValidsecretDeclaration1", secrets: validSecrets, xorValue: nil, strict: false),
          SecretDeclaration(secretName: "Valid_Secret_Group", secrets: validSecrets, xorValue: nil, strict: false)]
     }
 
-    static var secretDeclsWithInvalidKey: [SecretDeclaration] {
-        [SecretDeclaration(secretName: "secretDeclWithInvalid Name", secrets: validSecrets, xorValue: nil, strict: false),
-         SecretDeclaration(secretName: "1secretDeclWithInvalidName", secrets: validSecrets, xorValue: nil, strict: false),
+    static var secretDeclarationsWithInvalidKey: [SecretDeclaration] {
+        [SecretDeclaration(secretName: "secretDeclarationWithInvalid Name", secrets: validSecrets, xorValue: nil, strict: false),
+         SecretDeclaration(secretName: "1secretDeclarationWithInvalidName", secrets: validSecrets, xorValue: nil, strict: false),
          SecretDeclaration(secretName: "", secrets: validSecrets, xorValue: nil, strict: false),
          SecretDeclaration(secretName: "secret-GroupWith-Invalid-Name", secrets: validSecrets, xorValue: nil, strict: false),
-         SecretDeclaration(secretName: "_secretDeclWithInvalidName", secrets: validSecrets, xorValue: nil, strict: false)]
+         SecretDeclaration(secretName: "_secretDeclarationWithInvalidName", secrets: validSecrets, xorValue: nil, strict: false)]
     }
 
-    static var secretDeclWihtTooManyNoFlags: SecretDeclaration {
-        SecretDeclaration(secretName: "secretDeclWtihTooManyNoFlags", secrets: tooManySecretsWithNoFlag, xorValue: nil, strict: false)
+    static var secretDeclarationWihtTooManyNoFlags: SecretDeclaration {
+        SecretDeclaration(secretName: "secretDeclarationWtihTooManyNoFlags", secrets: tooManySecretsWithNoFlag, xorValue: nil, strict: false)
     }
 
-    static var secretDeclThatSharesFlag: SecretDeclaration {
-        SecretDeclaration(secretName: "secretDeclThatSharesFlag", secrets: tooManySecretsThatSharesFlag, xorValue: nil, strict: false)
+    static var secretDeclarationThatSharesFlag: SecretDeclaration {
+        SecretDeclaration(secretName: "secretDeclarationThatSharesFlag", secrets: tooManySecretsThatSharesFlag, xorValue: nil, strict: false)
     }
 }
 
-final class SecretDeclValidatorTests: XCTestCase {
+final class SecretDeclarationValidatorTests: XCTestCase {
 
-    func testValidationSucceedsForValidsecretDecls() {
-        for secretDecl in Constant.validsecretDecls {
-            let sut = SecretDeclValidator(secretDecl: secretDecl)
+    func testValidationSucceedsForValidsecretDeclarations() {
+        for secretDeclaration in Constant.validsecretDeclarations {
+            let sut = SecretDeclarationValidator(secretDeclaration: secretDeclaration)
             XCTAssertNoThrow(try sut.validate())
         }
     }
 
     func testValidationFailsForInvalidKey() {
-        for secretDecl in Constant.secretDeclsWithInvalidKey {
-            let sut = SecretDeclValidator(secretDecl: secretDecl)
+        for secretDeclaration in Constant.secretDeclarationsWithInvalidKey {
+            let sut = SecretDeclarationValidator(secretDeclaration: secretDeclaration)
             XCTAssertThrowsError(try sut.validate()) { error in
-                guard let error = error as? SecretDeclValidationError else {
+                guard let error = error as? SecretDeclarationValidationError else {
                     XCTFail("Unexpected Error")
                     return
                 }
 
                 switch error {
-                case .invalidSecretDeclKey:
+                case .invalidSecretDeclarationKey:
                     // Success case
                     break
                 default:
@@ -74,9 +74,9 @@ final class SecretDeclValidatorTests: XCTestCase {
     }
 
     func testValidationFailsForTooManyNoFlags() throws {
-        let sut = SecretDeclValidator(secretDecl: Constant.secretDeclWihtTooManyNoFlags)
+        let sut = SecretDeclarationValidator(secretDeclaration: Constant.secretDeclarationWihtTooManyNoFlags)
         XCTAssertThrowsError(try sut.validate()) { error in
-            guard let error = error as? SecretDeclValidationError else {
+            guard let error = error as? SecretDeclarationValidationError else {
                 XCTFail("Unexpected Error")
                 return
             }
@@ -92,9 +92,9 @@ final class SecretDeclValidatorTests: XCTestCase {
     }
 
     func testValidationFailsForTooManySharedFlags() {
-        let sut = SecretDeclValidator(secretDecl: Constant.secretDeclThatSharesFlag)
+        let sut = SecretDeclarationValidator(secretDeclaration: Constant.secretDeclarationThatSharesFlag)
         XCTAssertThrowsError(try sut.validate()) { error in
-            guard let error = error as? SecretDeclValidationError else {
+            guard let error = error as? SecretDeclarationValidationError else {
                 XCTFail("Unexpected Error")
                 return
             }

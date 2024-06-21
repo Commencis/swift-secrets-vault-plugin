@@ -52,7 +52,7 @@ extension RXByteArraySecretPlugin: XcodeBuildToolPlugin {
     func createBuildCommands(context: XcodePluginContext, target: XcodeTarget) throws -> [Command] {
         let generatorTool = try context.tool(named: Constant.toolName)
         let secretsDir = context.xcodeProject.directory.appending(Constant.acceptableSecretsFolder)
-        let configFile = secretsDir.appending("config.json")
+        let configFile = secretsDir.appending(Constant.rxByteArrayConfigFileName)
         guard let secretDirURL = URL(string: secretsDir.string, relativeTo: nil) else {
             return []
         }
@@ -62,7 +62,7 @@ extension RXByteArraySecretPlugin: XcodeBuildToolPlugin {
             options: []
         ).filter {
             $0.pathExtension == "json"
-            && $0.lastPathComponent != "config.json"
+            && $0.lastPathComponent != Constant.rxByteArrayConfigFileName
         }
         if let configData = try? Data(contentsOf: URL(fileURLWithPath: configFile.string)),
            let config = try? JSONDecoder().decode(RXByteArraySecretFileConfig.self, from: configData) {

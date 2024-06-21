@@ -23,7 +23,7 @@ public struct SecretItemValidator {
 
         // Check for duplicate flags
         guard Set(flags).count == flags.count else {
-            throw SecretItemValidationError.invalidFlagFormat
+            throw SecretItemValidationError.duplicateFlag
         }
 
         // Check for invalid flags

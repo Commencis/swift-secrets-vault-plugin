@@ -57,7 +57,8 @@ final class SecretItemValidatorTests: XCTestCase {
                 }
 
                 switch error {
-                case .invalidFlagFormat:
+                case .duplicateFlag,
+                        .invalidFlagFormat:
                     // Success case
                     break
                 default:
