@@ -1,4 +1,5 @@
 import Foundation
+import SecretsVaultUtility
 
 /// A struct responsible for validating secret declarations.
 ///
@@ -49,7 +50,7 @@ public struct SecretDeclarationValidator {
         }
 
         let allFlags = secretDeclaration.secrets.flatMap { item in
-            item.flags ?? []
+            item.flags.orEmpty
         }
         let uniqueFlags = Set(allFlags)
         if uniqueFlags.count != allFlags.count {
