@@ -1,8 +1,8 @@
 import Foundation
 
-extension Optional where Wrapped == String {
+public extension Optional where Wrapped: RangeReplaceableCollection {
 
-    public var orEmpty: Wrapped {
-        self ?? ""
+    @inlinable var orEmpty: Wrapped {
+        self ?? Wrapped()
     }
 }

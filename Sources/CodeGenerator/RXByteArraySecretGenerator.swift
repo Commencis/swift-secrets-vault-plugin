@@ -89,7 +89,7 @@ private extension RXByteArraySecretGenerator {
         var generatedRXByteArrayBody: String = ""
         if let ifBlock {
             let rxByteArray = Array(ifBlock.value.stringToByteArray(xorValue: xorValue).reversed())
-            generatedRXByteArrayBody += "#if \((ifBlock.flags ?? []).joined(separator: " || "))"
+            generatedRXByteArrayBody += "#if \((ifBlock.flags.orEmpty).joined(separator: " || "))"
             + .newLine
             + "\(rxByteArray)"
             + .newLine
@@ -98,7 +98,7 @@ private extension RXByteArraySecretGenerator {
             for elseIfBlock in elseIfBlocks {
                 let rxByteArray = Array(elseIfBlock.value.stringToByteArray(xorValue: xorValue).reversed())
                 generatedRXByteArrayBody += "#elseif "
-                + "\((elseIfBlock.flags ?? []).joined(separator: " || "))"
+                + "\((elseIfBlock.flags.orEmpty).joined(separator: " || "))"
                 + .newLine
                 + "\(rxByteArray)"
                 + .newLine
