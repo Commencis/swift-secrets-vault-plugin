@@ -68,7 +68,6 @@ extension RXByteArraySecretPlugin: XcodeBuildToolPlugin {
            let config = try? JSONDecoder().decode(RXByteArraySecretFileConfig.self, from: configData) {
             let targetSecretMap = config.targetSecretMap.first { $0.targetName == target.displayName }
             guard let targetSecretMap else {
-                print(target.displayName)
                 throw RXByteArraySecretFilePluginError.configForTargetIsNotPresent
             }
             secretFileList = secretFileList.filter { url in
