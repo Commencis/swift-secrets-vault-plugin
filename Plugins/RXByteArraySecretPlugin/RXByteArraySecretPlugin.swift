@@ -6,6 +6,7 @@ private enum Constant {
     static let toolName = "GenerateSecretCommand"
     static var acceptableSecretsFolder = ".rxByteArraySecrets"
     static let rxByteArrayConfigFileName = "config.json"
+    static let jsonPathExtension = "json"
 }
 
 @main
@@ -23,7 +24,7 @@ struct RXByteArraySecretPlugin: BuildToolPlugin {
             includingPropertiesForKeys: nil
         )
         let jsonFilePaths = contents?.compactMap { url -> Path? in
-            guard url.pathExtension.lowercased() == "json" else {
+            guard url.pathExtension.lowercased() == Constant.jsonPathExtension else {
                 return nil
             }
 
@@ -115,7 +116,5 @@ private extension RXByteArraySecretPlugin {
             inputFiles: [input],
             outputFiles: [output]
         )
-
-
     }
 }
