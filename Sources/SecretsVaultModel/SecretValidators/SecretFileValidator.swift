@@ -39,10 +39,10 @@ public struct SecretFileValidator {
         }
 
         // Check if the secrets groups has unique keys
-        let allsecretDeclarationKeys = secretFile.secretDeclarations.map { $0.secretName }
-        let uniqueKeys = Set(allsecretDeclarationKeys)
-        if uniqueKeys.count != allsecretDeclarationKeys.count {
-            let duplicateKeys = allsecretDeclarationKeys.filter { declKey in
+        let allSecretDeclarationKeys = secretFile.secretDeclarations.map { $0.secretName }
+        let uniqueKeys = Set(allSecretDeclarationKeys)
+        if uniqueKeys.count != allSecretDeclarationKeys.count {
+            let duplicateKeys = allSecretDeclarationKeys.filter { declKey in
                 !uniqueKeys.contains(declKey)
             }
             throw SecretFileValidationError.moreThanTwoSecretDeclarationShareKey(duplicateKeys)

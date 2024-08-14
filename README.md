@@ -27,7 +27,7 @@ Using `Swift Secret Vault Plugin` requires Swift 5.9+ toolchain with the Swift P
 Add the following dependency to your `Package.swift` file:
 ```swift
 dependencies: [
-    .package(url: "https://github.com/Commencis/swift-secrets-vault-plugin", from: "1.0.0")
+    .package(url: "https://github.com/Commencis/swift-secrets-vault-plugin", from: "<version>")
 ]
 ````
 
