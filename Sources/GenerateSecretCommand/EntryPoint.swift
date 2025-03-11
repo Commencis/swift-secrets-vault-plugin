@@ -5,12 +5,11 @@ import Foundation
 internal struct EntryPoint: ParsableCommand {
 
     static let configuration = CommandConfiguration(
-        commandName: "generateSecret",
+        commandName: "GenerateSecretCommand",
         abstract: "Generates code from given json secrets file",
-        version: "0.0.1-WIP",
+        version: "0.0.1",
         subcommands: [
             RXByteArraySecretFileCommand.self
         ]
     )
 }
-
