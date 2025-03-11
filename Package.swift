@@ -18,8 +18,6 @@ let platforms: [PackageDescription.SupportedPlatform] = [
 // MARK: - Package Description Product
 
 let products: [PackageDescription.Product] = [
-    .executable(name: "generateSecret", targets: ["GenerateSecretCommand"]),
-    .executable(name: "GenerateSecretCommand", targets: ["GenerateSecretCommand"]),
     .plugin(name: "RXByteArraySecretPlugin", targets: ["RXByteArraySecretPlugin"]),
 ]
 
