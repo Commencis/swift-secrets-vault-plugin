@@ -55,13 +55,15 @@ public struct SecretFileValidator {
         }
 
         // Check if the secrets groups has unique keys
-        let allSecretDeclarationKeys = secretFile.secretDeclarations.map { $0.secretName }
-        let uniqueKeys = Set(allSecretDeclarationKeys)
-        if uniqueKeys.count != allSecretDeclarationKeys.count {
-            let duplicateKeys = allSecretDeclarationKeys.filter { declKey in
-                !uniqueKeys.contains(declKey)
+        var seen: Set<String> = []
+        var duplicates: Set<String> = []
+        secretFile.secretDeclarations.forEach { secretDecl in
+            if !seen.insert(secretDecl.secretName).inserted {
+                duplicates.insert(secretDecl.secretName)
             }
-            throw SecretFileValidationError.moreThanTwoSecretDeclarationShareKey(duplicateKeys)
+        }
+        if !duplicates.isEmpty {
+            throw SecretFileValidationError.moreThanTwoSecretDeclarationShareKey(Array(duplicates))
         }
     }
 }
